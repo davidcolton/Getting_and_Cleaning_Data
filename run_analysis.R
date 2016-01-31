@@ -1,4 +1,4 @@
-setwd("C:/MyData/Learning/Coursera/JohnsHopkins/03_DataCleaning/Week04/project")
+setwd("C:/MyData/Learning/Coursera/JohnsHopkins/GitProjects/Getting_and_Cleaning_Data")
 rm(list = ls())
 
 ###########################################################
@@ -13,7 +13,7 @@ rm(list = ls())
 
 ## The first thing to do is to load in the test data files
 ## Load is the subject_test.txt file and process
-subject_test <- read.table("./UCI HAR Dataset/test/subject_test.txt",
+subject_test <- read.table("./test/subject_test.txt",
                            sep = " ",
                            header = FALSE)
 
@@ -25,14 +25,14 @@ subject_test_df <-
 
 ## Load is the x_test.txt file and convert using tbl_df
 ## Column names will be added later
-x_test <- read.table("./UCI HAR Dataset/test/X_test.txt",
+x_test <- read.table("./test/X_test.txt",
                      header = FALSE)
 
 ## Convert x test using tbl_df
 x_test_df <- tbl_df(x_test)
 
 ## Load in the y_test.txt file and process
-y_test <- read.csv("./UCI HAR Dataset/test/y_test.txt",
+y_test <- read.csv("./test/y_test.txt",
                    header = FALSE)
 
 ## Rename the first column to reflect that it represents the label
@@ -40,7 +40,7 @@ names(y_test) <- "activity"
 
 
 ## Repeat for the training files
-subject_train <- read.table("./UCI HAR Dataset/train/subject_train.txt",
+subject_train <- read.table("./train/subject_train.txt",
                             sep = " ",
                             header = FALSE)
 
@@ -52,14 +52,14 @@ subject_train_df <-
 
 ## Load is the x_train.txt file and convert using tbl_df
 ## Column names will be added later
-x_train <- read.table("./UCI HAR Dataset/train/X_train.txt",
+x_train <- read.table("./train/X_train.txt",
                      header = FALSE)
 
 ## Convert x train using tbl_df
 x_train_df <- tbl_df(x_train)
 
 ## Load in the y_train.txt file and process
-y_train <- read.csv("./UCI HAR Dataset/train/y_train.txt",
+y_train <- read.csv("./train/y_train.txt",
                    header = FALSE)
 
 ## Convert y train using tbl_df
@@ -91,7 +91,7 @@ data <- bind_rows(x_train_df, x_test_df)
 ##############################################################
 
 ## Read in the features and convert to dplyr dataframe
-features <- read.table("./UCI HAR Dataset/features.txt",
+features <- read.table("./features.txt",
                        sep = " ",
                        header = FALSE)
 
@@ -131,7 +131,7 @@ names(data) <- gsub("-", "", names(data))
 ##############################################################
 
 ## Read in the activity descriptive names
-activities <- read.table("./UCI HAR Dataset/activity_labels.txt",
+activities <- read.table("./activity_labels.txt",
                          sep = " ",
                          header = FALSE)
 
@@ -153,7 +153,7 @@ lables[, 1] <- descriptive_activities
 final_dataset <- bind_cols(subjects, lables, data)
 
 ## Write out the final dataset
-write.table(final_dataset, "./UCI HAR Dataset/cleaned_data.txt")
+write.table(final_dataset, "./cleaned_data.txt")
 
 
 #####################################################################  
@@ -168,7 +168,7 @@ tidy_dataset <- summarise_each(final_dataset_grouped, funs(mean))
 
 ## Write out the tidy dataset
 write.table(tidy_dataset, 
-            "./UCI HAR Dataset/tidy_data.txt",
+            "./tidy_data.txt",
             row.name=FALSE)
 
 
